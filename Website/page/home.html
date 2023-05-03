@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    <link rel="stylesheet" href="/Website/style/home.css" />
+    <link rel="icon" type="image/png" href="/Website/img/logo.png" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+      src = "script/script.js";
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  </head>
+
+  <body>
+    <script>
+      ((g) => {
+        var h,
+          a,
+          k,
+          p = "The Google Maps JavaScript API",
+          c = "google",
+          l = "importLibrary",
+          q = "__ib__",
+          m = document,
+          b = window;
+        b = b[c] || (b[c] = {});
+        var d = b.maps || (b.maps = {}),
+          r = new Set(),
+          e = new URLSearchParams(),
+          u = () =>
+            h ||
+            (h = new Promise(async (f, n) => {
+              await (a = m.createElement("script"));
+              e.set("libraries", [...r] + "");
+              for (k in g)
+                e.set(
+                  k.replace(/[A-Z]/g, (t) => "_" + t[0].toLowerCase()),
+                  g[k]
+                );
+              e.set("callback", c + ".maps." + q);
+              a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+              d[q] = f;
+              a.onerror = () => (h = n(Error(p + " could not load.")));
+              a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+              m.head.append(a);
+            }));
+        d[l]
+          ? console.warn(p + " only loads once. Ignoring:", g)
+          : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
+      })({ key: "AIzaSyBY7nlhjn21FOULaJBR_TEvMUWtTfTvIY0", v: "beta" });
+    </script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCzwMPJXUwqtrGq24n-sNJVzDoYGjKy7nA",
+        authDomain: "goo-map-d18af.firebaseapp.com",
+        databaseURL:
+          "https://goo-map-d18af-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "goo-map-d18af",
+        storageBucket: "goo-map-d18af.appspot.com",
+        messagingSenderId: "233030484117",
+        appId: "1:233030484117:web:b9cd75073ec7c045f19b9c",
+        measurementId: "G-3ZSNNJ580Z",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+    </script>
+    <div class="container-header">
+      <div class="title img">
+        <a href="index.html">
+          <img src="./img/logo.png" alt="" style="left: 1cm; top: 1cm" />
+        </a>
+      </div>
+
+      <div class="box-text" style="top: 3cm; left: -4cm"></div>
+      <div
+        data-firebases="hasil"
+        class="text-content"
+        style="top: 4cm; left: -18cm"
+      >
+        <script>
+          const hasil = document.querySelector('[data-firebases = "hasil"]');
+          firebase
+            .database()
+            .ref("Data")
+            .on("value", (snap) => {
+              snap.forEach((user) => {
+                hasil.innerHTML += `
+                <div> ${user.val().Latitude}, </div>
+                <div> ${user.val().Longitude}</div>
+                <br>
+                `;
+              });
+            });
+        </script>
+
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBY7nlhjn21FOULaJBR_TEvMUWtTfTvIY0&callback=initMap"></script> -->
+        <!-- <script>
+          firebaseRef
+            .on("value",)
+            .then((snapshot) => {
+              const data = snapshot.val();
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        </script> -->
+        <script>
+          // Initialize and add the map
+          let map;
+          var firebaseRef = firebase.database().ref("Data");
+          async function initMap() {
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerView } = await google.maps.importLibrary(
+              "marker"
+            );
+            firebase
+              .database()
+              .ref("Data")
+              .once("value", function (snapshot) {
+                snapshot.forEach(function (coor) {
+                  console.log(coor);
+                  var latlong = [coor.val().Latitude, coor.val().Longitude];
+                  console.log(latlong);
+                  const map = new google.maps.Map(
+                    document.getElementById("map"),
+                    {
+                      center: { lat: 5.556061, lng: 95.321821 },
+                      zoom: 13,
+                    }
+                  );
+                  var marker = new google.maps.Marker({
+                    map: map,
+                    position: { lat: latlong[0], lng: latlong[1] },
+                  });
+                  console.log(marker);
+                  // var marker = new google.maps.Marker({
+                  //   map: map,
+                  //   position: { lat: 5.508682, lng: 95.324609 },
+                  // });
+                });
+              });
+          }
+
+          initMap();
+        </script>
+      </div>
+      <div id="map" class="map"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #FFC52F;
+}
+
+a {
+    text-decoration: none;
+}
+
+.logo img{
+    position: fixed;
+    width: 800px;
+    height: 800px;
+}
+
+
+
+.circle-red{
+    position: fixed;
+    height: 120px;
+    width: 120px;
+    background-color:red;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+.circle-green{
+    position: fixed;
+    height: 120px;
+    width: 120px;
+    background-color:green;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+.circle-red:hover{
+    background-color: darkred ;
+}
+
+.circle-green:hover{
+    background-color: darkgreen;
+}
+
+.text-question{
+    /* apakah anda sudah pernah menggunakan aplikasi ini sebelumnya? */
+
+position: fixed;
+width: 539px;
+height: 68px;
+left: 277px;
+top: 383px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 800;
+font-size: 24px;
+text-align: center;
+line-height: 100%;
+/* or 34px */
+
+text-transform: uppercase;
+
+color: #FFFFFF;
+
+text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.5);
+
+}
+
+.text-answer{
+    /* gak pernah */
+
+position: fixed;
+width: 304px;
+height: 34px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 85.5%;
+/* or 34px */
+text-transform: uppercase;
+
+color: #FFFFFF;
+
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+
+}

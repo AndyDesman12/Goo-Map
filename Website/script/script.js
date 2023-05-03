@@ -1,0 +1,1 @@
+const hasil = document.querySelector('[data-firebases = "hasil"]')
